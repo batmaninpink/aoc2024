@@ -45,10 +45,6 @@ pub fn part2(s: &str) -> u32 {
     dorun(s, true).1
 }
 
-pub fn run(s: &str) -> u32 {
-    dorun(s, false).0
-}
-
 fn dorun(input: &str, p2: bool) -> (u32, u32) {
     let mut count1 = 0;
     let mut count2 = 0;

@@ -12,6 +12,7 @@ panic = 'abort'
 
 [dependencies]
 atoi_simd = "*"
+memchr = "*"
 
 [dev-dependencies]
 criterion = { version = "2.7.2", package = "codspeed-criterion-compat" }
