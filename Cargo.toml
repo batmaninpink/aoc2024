@@ -1,0 +1,21 @@
+[package]
+name = "cargo2024"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "aoc2024"
+crate-type = [ "staticlib", "rlib" ]
+
+[profile.release]
+panic = 'abort'
+
+[dependencies]
+atoi_simd = "*"
+
+[dev-dependencies]
+criterion = { version = "2.7.2", package = "codspeed-criterion-compat" }
+
+[[bench]]
+name = "d2_bench"
+harness = false
