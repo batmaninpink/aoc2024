@@ -38,14 +38,18 @@ unsafe fn issafer(v: &[u32], skip: usize) -> bool {
 }
 
 pub fn part1(s: &str) -> u32 {
-    run(s, false).0
+    dorun(s, false).0
 }
 
 pub fn part2(s: &str) -> u32 {
-    run(s, true).1
+    dorun(s, true).1
 }
 
-fn run(input: &str, p2: bool) -> (u32, u32) {
+pub fn run(s: &str) -> u32 {
+    dorun(s, false).0
+}
+
+fn dorun(input: &str, p2: bool) -> (u32, u32) {
     let mut count1 = 0;
     let mut count2 = 0;
 
@@ -65,7 +69,7 @@ fn run(input: &str, p2: bool) -> (u32, u32) {
             if unsafe { issafe(&v[..idx], 666) || issafer(&v[..idx], 666) } {
                 count1 += 1;
                 count2 += 1;
-            } else if (p2) {
+            } else if p2 {
                 for i in 0..idx {
                     if unsafe {issafe(&v[..idx], i) || issafer(&v[..idx], i) } {
                         count2 += 1;
