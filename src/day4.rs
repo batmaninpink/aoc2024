@@ -14,16 +14,16 @@ fn get(m: &Vec<&[u8]>, y: i32, x: i32) -> u8 {
     unsafe { *m[y].get_unchecked(x) }
 }
 
-fn check1x(m: &Vec<&[u8]>, y: i32, x: i32, dy: i32, dx: i32) -> bool {
-    get(m, y + dy, x + dx) == b'M'
-        && get(m, y + 2 * dy, x + 2 * dx) == b'A'
-        && get(m, y + 3 * dy, x + 3 * dx) == b'S'
+fn check1x(m: &Vec<&[u8]>, y: i32, x: i32, dx: i32) -> bool {
+    get(m, y - 1, x + dx) == b'M'
+        && get(m, y - 2, x + 2 * dx) == b'A'
+        && get(m, y -3, x + 3 * dx) == b'S'
 }
 
-fn check1s(m: &Vec<&[u8]>, y: i32, x: i32, dy: i32, dx: i32) -> bool {
-    get(m, y + dy, x + dx) == b'A'
-        && get(m, y + 2 * dy, x + 2 * dx) == b'M'
-        && get(m, y + 3 * dy, x + 3 * dx) == b'X'
+fn check1s(m: &Vec<&[u8]>, y: i32, x: i32, dx: i32) -> bool {
+    get(m, y -1, x + dx) == b'A'
+        && get(m, y - 2, x + 2 * dx) == b'M'
+        && get(m, y - 3, x + 3 * dx) == b'X'
 }
 
 pub fn part1(input: &str) -> u32 {
@@ -38,8 +38,8 @@ pub fn part1(input: &str) -> u32 {
         for x in 0..xlen {
             let c = unsafe { *m[y as usize].get_unchecked(x as usize) };
             if c == b'X' {
-                for (dy, dx) in [(-1, 0), (-1, 1), (-1, -1)/*, (1, 0), (1, 1), (1, -1)*/] {
-                    if check1x(&m, y, x, dy, dx) {
+                for dx in [-1, 0, 1]{
+                    if check1x(&m, y, x, dx) {
                         count += 1;
                     }
                 }
@@ -50,8 +50,8 @@ pub fn part1(input: &str) -> u32 {
                     }
                 }
             } else if c == b'S' {
-                for (dy, dx) in [(-1, 0), (-1, 1), (-1, -1)/*, (1, 0), (1, 1), (1, -1)*/] {
-                    if check1s(&m, y, x, dy, dx) {
+                for dx in [-1, 0, 1] {
+                    if check1s(&m, y, x, dx) {
                         count += 1;
                     }
                 }
@@ -65,7 +65,7 @@ pub fn part1(input: &str) -> u32 {
         }
     }
     count
-}
+} 
 
 fn get2(m: &[u8], ylen: i32, xlen: i32, y: i32, x: i32) -> u8 {
     if y < 0 || x < 0 || y >= ylen || x >= xlen {
