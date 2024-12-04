@@ -14,12 +14,16 @@ fn get(m: &Vec<&[u8]>, y: i32, x: i32) -> u8 {
     unsafe { *m[y].get_unchecked(x) }
 }
 
-fn check1(m: &Vec<&[u8]>, y: i32, x: i32, dy: i32, dx: i32) -> bool {
-    /*get(m, y, x) == b'X'
-    && */
+fn check1x(m: &Vec<&[u8]>, y: i32, x: i32, dy: i32, dx: i32) -> bool {
     get(m, y + dy, x + dx) == b'M'
         && get(m, y + 2 * dy, x + 2 * dx) == b'A'
         && get(m, y + 3 * dy, x + 3 * dx) == b'S'
+}
+
+fn check1s(m: &Vec<&[u8]>, y: i32, x: i32, dy: i32, dx: i32) -> bool {
+    get(m, y + dy, x + dx) == b'A'
+        && get(m, y + 2 * dy, x + 2 * dx) == b'M'
+        && get(m, y + 3 * dy, x + 3 * dx) == b'X'
 }
 
 pub fn part1(input: &str) -> u32 {
@@ -32,17 +36,28 @@ pub fn part1(input: &str) -> u32 {
     let xlen = m[0].len() as i32;
     for y in 0..ylen {
         for x in 0..xlen {
-            if x < xlen - 3 {
-                let x = x as usize;
-                if &m[y as usize][x..x + 4] == b"XMAS" {
-                    count += 1;
-                } else if &m[y as usize][x..x + 4] == b"SAMX" {
-                    count += 1;
+            let c = unsafe { *m[y as usize].get_unchecked(x as usize) };
+            if c == b'X' {
+                for (dy, dx) in [(-1, 0), (-1, 1), (-1, -1)/*, (1, 0), (1, 1), (1, -1)*/] {
+                    if check1x(&m, y, x, dy, dx) {
+                        count += 1;
+                    }
                 }
-            }
-            if unsafe { *m[y as usize].get_unchecked(x as usize) } == b'X' {
-                for (dy, dx) in [(-1, 0), (-1, 1), (-1, -1), (1, 0), (1, 1), (1, -1)] {
-                    if check1(&m, y, x, dy, dx) {
+                if x < xlen - 3 {
+                    let x = x as usize;
+                    if &m[y as usize][x+1..x + 4] == b"MAS" {
+                        count += 1;
+                    }
+                }
+            } else if c == b'S' {
+                for (dy, dx) in [(-1, 0), (-1, 1), (-1, -1)/*, (1, 0), (1, 1), (1, -1)*/] {
+                    if check1s(&m, y, x, dy, dx) {
+                        count += 1;
+                    }
+                }
+                if x < xlen - 3 {
+                    let x = x as usize;
+                    if &m[y as usize][x+1..x + 4] == b"AMX" {
                         count += 1;
                     }
                 }
@@ -50,28 +65,8 @@ pub fn part1(input: &str) -> u32 {
         }
     }
     count
-} /*
-  pub fn part11(input: &str) -> u32 {
-      let mut m = Vec::new();
-      let mut xmax = 0;
-      for line in input.lines() {
-          //let mut v = vec![0u128; 8];
-          let mut bs = fixedbitset::FixedBitSet::with_capacity(1024);
-          let line = line.as_bytes();
-          for n in 0..line.len() {
-              match line[n] {
-                  b'X' => { bs.insert(n*4); },
-                  b'M' => { bs.insert(n*4 +1); },
-                  b'A' => { bs.insert(n*4 +2); },
-                  b'S' => { bs.insert(n*4 +3); },
-                  _ => {}
-              }
-          }
-          xmax = xmax.max(line.len());
-          m.push(bs);
-      }
-      0
-  }*/
+}
+
 fn get2(m: &[u8], ylen: i32, xlen: i32, y: i32, x: i32) -> u8 {
     if y < 0 || x < 0 || y >= ylen || x >= xlen {
         // This check is not needed, but ends up being faster on my machine
