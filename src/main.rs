@@ -7,6 +7,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
 fn main() {
     println!("D1.1: {:?}", day1::part1(day1::INPUT));
@@ -23,4 +24,6 @@ fn main() {
     println!("D6.2: {:?}", day6::part2(day6::INPUT));
     println!("D7.1: {:?}", day7::part1(day7::INPUT));
     println!("D7.2: {:?}", day7::part2(day7::INPUT));
+    println!("D8.1: {:?}", day8::part1(day8::INPUT));
+    println!("D8.2: {:?}", day8::part2(day8::INPUT));
 }
