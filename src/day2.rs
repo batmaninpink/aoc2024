@@ -20,9 +20,9 @@ unsafe fn issafe(v: &[u32], skip: usize) -> bool {
 
 unsafe fn issafer(v: &[u32], skip: usize) -> bool {
     let sz = v.len();
-    let mut last = *v.get_unchecked(v.len()-1);
+    let mut last = *v.get_unchecked(v.len() - 1);
     if skip == 0 {
-        last = v.get_unchecked(v.len()-2) - 1;
+        last = v.get_unchecked(v.len() - 2) - 1;
     }
     for i in 1..v.len() {
         if skip == i {
@@ -67,7 +67,7 @@ fn dorun(input: &str, p2: bool) -> (u32, u32) {
                 count2 += 1;
             } else if p2 {
                 for i in 0..idx {
-                    if unsafe {issafe(&v[..idx], i) || issafer(&v[..idx], i) } {
+                    if unsafe { issafe(&v[..idx], i) || issafer(&v[..idx], i) } {
                         count2 += 1;
                         break;
                     }
