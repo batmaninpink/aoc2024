@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 
 mod day1;
+mod day10;
 mod day2;
 mod day3;
 mod day4;
@@ -29,4 +30,6 @@ fn main() {
     println!("D8.2: {:?}", day8::part2(day8::INPUT));
     println!("D9.1: {:?}", day9::part1(day9::INPUT));
     println!("D9.2: {:?}", day9::part2(day9::INPUT));
+    println!("D10.1: {:?}", day10::part1(day10::INPUT));
+    println!("D10.2: {:?}", day10::part2(day10::INPUT));
 }

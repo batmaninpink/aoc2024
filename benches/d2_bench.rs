@@ -1,4 +1,4 @@
-use aoc2024::day9::*;
+use aoc2024::day10::*;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 pub fn criterion_benchmark(c: &mut Criterion) {
