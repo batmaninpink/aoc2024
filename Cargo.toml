@@ -14,6 +14,7 @@ panic = 'abort'
 atoi_simd = "*"
 memchr = "*"
 rayon = "*"
+rustc-hash = "*"
 
 [dev-dependencies]
 criterion = { version = "2.7.2", package = "codspeed-criterion-compat" }
