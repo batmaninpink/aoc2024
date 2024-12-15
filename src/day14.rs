@@ -96,6 +96,8 @@ fn part1i(s: &str) -> u64 {
     q0 * q1 * q2 * q3
 }
 
+use rayon::prelude::*;
+
 fn part2i(s: &str) -> i32 {
     let b = s.as_bytes();
     let mut r = vec![[0i32; 4]; 512];
@@ -153,7 +155,9 @@ fn part2i(s: &str) -> i32 {
         nr += 1;
     }
 
-    solve(&r, nr, 100, 15000)
+    let res = (100..14000).step_by(1000).par_bridge().map(|n|solve(&r, nr, n, n+1000)).filter(|n| *n > 0).collect::<Vec<i32>>();
+    res[0]
+    //solve(&r, nr, 100, 15000)
 }
 
 fn solve(r: &[[i32;4]], nr: usize, t1: i32, t2: i32) -> i32 {
